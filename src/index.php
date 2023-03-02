@@ -19,11 +19,9 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="?page=novoUser">Cadastro</a>
         </li>
+        
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="?page=novoFunc">Cadastrar Funcionário</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="?page=servi">Serviços</a>
+          <a class="nav-link active" href="?page=servi">Manuntenção</a>
         </li>
         
         
@@ -35,7 +33,7 @@
     <div class="row">
         <div class="col mt-5">
         <?php
-    include("mysqlConfig.php");    
+        
     switch(@$_REQUEST["page"]){
         case "novoUser":
             include("cadastro.php");
