@@ -21,7 +21,9 @@
         </li>
         
         <li class="nav-item">
-          <a class="nav-link active" href="?page=servi">Manuntenção</a>
+          <a class="nav-link active" aria-current="page" href="?page=manunt">Manuntenção</a>
+        </li><li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="?page=servi">Informações</a>
         </li>
         
         
@@ -31,6 +33,7 @@
   </div>
   <div class="container">
     <div class="row">
+      
         <div class="col mt-5">
         <?php
         
@@ -38,14 +41,14 @@
         case "novoUser":
             include("cadastro.php");
             break;
-        case "novoFunc":
-            include("cadastroFuncionario.php");
+        case "manunt":
+            include("servicos.php");
             break;   
         case "servi":
             include("servicos.php");
-            break;       
-        default:
-            print "<h1> TESTE OFICINA!</h1>";    
+            break;
+                   
+        
     }
   ?>
         </div>
