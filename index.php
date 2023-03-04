@@ -1,7 +1,24 @@
 <?php
-session_start();
-//Gerar senha
-//echo password_hash("123456", PASSWORD_DEFAULT);
+
+    if(isset($_POST['#cadUsuario'])){
+        /* print_r($_POST['nameEmpresa']);
+        print_r($_POST['cnpjEmpresa']);
+        print_r($_POST['inscricaoEmpresa']);
+        print_r($_POST['razaoEmpresa']); */
+
+        include_once('config.php');
+        $nameEmpresa = $_POST['nameEmpresa'];  
+        $cnpjEmpresa = $_POST['cnpjEmpresa'];
+        $inscricaoEmpresa = $_POST['inscricaoEmpresa'];
+        $razaoEmpresa = $_POST['razaoEmpresa'];
+        print "PASSOU";
+
+        $result = mysqli_query($conn, "INSERT INTO oficina (nome,cnpj,inscricao,razao) VALUES ($nameEmpresa,$cnpjEmpresa,$inscricaoEmpresa, $razaoEmpresa)");
+
+
+
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -69,26 +86,26 @@ session_start();
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="cad-usuario-form">
+                    <form id="cad-usuario-form" action="index.php" action="POST">
                         <span id="msgAlertErroCad"></span>
 
                         <div class="mb-3">
                             <label for="cadnome" class="col-form-label">Nome:</label>
-                            <input type="text" name="cadnome" class="form-control" id="cadnome" placeholder="Digite o nome completo">
+                            <input type="text" name="nameEmpresa" class="form-control" id="nameEmpresa" placeholder="Digite o nome completo">
                         </div>
 
                         <div class="mb-3">
                             <label for="cademail" class="col-form-label">CNPJ:</label>
-                            <input type="email" name="cnpj" class="form-control" id="cnpj" placeholder="Digite seu CNPJ">
+                            <input type="number" name="cnpjEmpresa" class="form-control" id="cnpjEmpresa" placeholder="Digite seu CNPJ">
                         </div>
 
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Inscrição:</label>
-                            <input type="password" name="inscricao" class="form-control" id="inscricao"  placeholder="Digite sua Inscrição">
+                            <input type="text" name="inscricaoEmpresa" class="form-control" id="inscricaoEmpresa"  placeholder="Digite sua Inscrição">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Razão:</label>
-                            <input type="password" name="razao" class="form-control" id="razao"  placeholder="Digite sua Inscrição">
+                            <input type="text" name="razaoEmpresa" class="form-control" id="razaoEmpresa"  placeholder="Digite sua Inscrição">
                         </div>
                         <h6>Endereço</h6>
                         <div class="mb-3">
@@ -115,10 +132,8 @@ session_start();
                             <label for="cadsenha" class="col-form-label">Número:</label>
                             <input type="password" name="numero" class="form-control" id="numero"  placeholder="Informe seu número">
                         </div>
-
-
                         <div class="mb-3">
-                            <input type="submit" class="btn btn-outline-success bt-sm" id="cad-usuario-btn" value="Cadastrar">
+                            <input type="submit" class="btn btn-outline-success bt-sm" id="cadUsuario" value="Cadastrar" name="cadUsuario">
                         </div>
                     </form>
                 </div>
