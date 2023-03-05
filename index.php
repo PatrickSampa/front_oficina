@@ -1,6 +1,6 @@
 <?php
 
-    if(isset($_POST['#cadUsuario'])){
+    if(isset($_POST['cadUsuario'])){
         /* print_r($_POST['nameEmpresa']);
         print_r($_POST['cnpjEmpresa']);
         print_r($_POST['inscricaoEmpresa']);
@@ -11,7 +11,7 @@
         $cnpjEmpresa = $_POST['cnpjEmpresa'];
         $inscricaoEmpresa = $_POST['inscricaoEmpresa'];
         $razaoEmpresa = $_POST['razaoEmpresa'];
-        print "PASSOU";
+        
 
         $result = mysqli_query($conn, "INSERT INTO oficina (nome,cnpj,inscricao,razao) VALUES ($nameEmpresa,$cnpjEmpresa,$inscricaoEmpresa, $razaoEmpresa)");
 
