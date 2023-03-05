@@ -9,7 +9,7 @@
         
         
 
-        $result = mysqli_query($connexao, "INSERT INTO cliente(nome,cpf) VALUES ($nameUser,$cpfUser)");
+        $result = mysqli_query($connexao, "INSERT INTO cliente(nome,cpf) VALUES ('$nameUser','$cpfUser')");
 
     }
 ?>    

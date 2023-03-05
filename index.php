@@ -6,15 +6,20 @@
         print_r($_POST['inscricaoEmpresa']);
         print_r($_POST['razaoEmpresa']); */
 
-        include_once('config.php');
-        $nameEmpresa = $_POST['nameEmpresa'];  
-        $cnpjEmpresa = $_POST['cnpjEmpresa'];
-        $inscricaoEmpresa = $_POST['inscricaoEmpresa'];
-        $razaoEmpresa = $_POST['razaoEmpresa'];
+        try {
+            include('config.php');
+            $nameEmpresa = $_POST['nameEmpresa'];  
+            $cnpjEmpresa = $_POST['cnpjEmpresa'];
+            $inscricaoEmpresa = $_POST['inscricaoEmpresa'];
+            $razaoEmpresa = $_POST['razaoEmpresa'];
+
+            $result = mysqli_query($conn, "INSERT INTO oficina(nome,cnpj,inscricao,razao) VALUES('$nameEmpresa','$cnpjEmpresa','$inscricaoEmpresa', '$razaoEmpresa')");
+            
+        } catch (\Throwable $th) {
+            echo 'Deu ruim :/'. $th->getMessage();
+        }
+
         
-
-        $result = mysqli_query($conn, "INSERT INTO oficina (nome,cnpj,inscricao,razao) VALUES ($nameEmpresa,$cnpjEmpresa,$inscricaoEmpresa, $razaoEmpresa)");
-
 
 
     }
@@ -86,7 +91,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="cad-usuario-form" action="index.php" action="POST">
+                    <form id="cad-usuario-form" action="index.php" method="POST">
                         <span id="msgAlertErroCad"></span>
 
                         <div class="mb-3">
@@ -133,7 +138,7 @@
                             <input type="password" name="numero" class="form-control" id="numero"  placeholder="Informe seu número">
                         </div>
                         <div class="mb-3">
-                            <input type="submit" class="btn btn-outline-success bt-sm" id="cadUsuario" value="Cadastrar" name="cadUsuario">
+                            <input type="submit" id="cadUsuario" name="cadUsuario">
                         </div>
                     </form>
                 </div>
