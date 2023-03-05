@@ -9,7 +9,7 @@
     if($conn->connect_errno){
         echo "Erro";
     }else{
-        echo "Connection Successful";
+        echo "Connectado </br>";
     }
 
 

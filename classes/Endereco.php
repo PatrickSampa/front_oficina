@@ -1,5 +1,5 @@
 <?php
-class Oficina{
+class Endereco{
     private $cep;
     private $numero;
     private $bairro;

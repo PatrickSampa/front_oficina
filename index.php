@@ -5,34 +5,37 @@
         print_r($_POST['cnpjEmpresa']);
         print_r($_POST['inscricaoEmpresa']);
         print_r($_POST['razaoEmpresa']); */
-        include('config.php');
-        include('classes/Oficina.php');
+        include_once('config.php');
         try {
+            
+            include_once('classes/Oficina.php');
+            
             $oficina = new Oficina( $_POST['nameEmpresa'], $_POST['cnpjEmpresa'], $_POST['inscricaoEmpresa'], $_POST['razaoEmpresa']);
-            $nameEmpresa = $_POST['nameEmpresa'];  
-            $cnpjEmpresa = $_POST['cnpjEmpresa'];
-            $inscricaoEmpresa = $_POST['inscricaoEmpresa'];
-            $razaoEmpresa = $_POST['razaoEmpresa'];
 
-            $result = mysqli_query($conn, "INSERT INTO oficina(nome,cnpj,inscricao,razao) VALUES('$nameEmpresa','$cnpjEmpresa','$inscricaoEmpresa', '$razaoEmpresa')");
+            $result = $conn->query("INSERT INTO oficina VALUES(null, '{$oficina->get_nome()}','{$oficina->get_cnpj()}','{$oficina->get_inscricao()}', '{$oficina->get_razao()}')");
             
         } catch (\Throwable $th) {
-            echo 'Deu ruim: Empresa'. $th->getMessage();
+            echo 'Deu ruim em: Oficina </br>'.'\n\n\n\n >>>'. $th->getMessage();
         }
 
         try {
-            $cep = $_POST['cep'];  
-            $estado = $_POST['estado'];
-            $municipio = $_POST['municipio'];
-            $razaoEmpresa = $_POST['bairro'];
-            $inscricaoEmpresa = $_POST['logradouro'];
-            $razaoEmpresa = $_POST['numero'];
-
-            $result = mysqli_query($conn, "INSERT INTO oficina(nome,cnpj,inscricao,razao) VALUES('$nameEmpresa','$cnpjEmpresa','$inscricaoEmpresa', '$razaoEmpresa')");//code...
+            include_once('classes/Endereco.php');
+            
+            $res = mysqli_query($conn, 'select max(idEmpresa) from oficina;');
+            $max = mysqli_fetch_all($res, MYSQLI_ASSOC);
+            $max = $max[0]['max(idEmpresa)'];
+            $res2 = mysqli_query($conn, "select idMunicipio from municipio where Municipio like '{$_POST['municipio']}';");
+            $idmun = mysqli_fetch_all($res2, MYSQLI_ASSOC);
+            $idmun = $idmun[0]['idMunicipio'];
+            $endereco = new Endereco( $_POST['cep'], $_POST['estado'], $_POST['estado'], $_POST['municipio'], $_POST['bairro'], $_POST['logradouro'], $_POST['numero'], $max, $idmun);
+            
+            
         } catch (\Throwable $th) {
-
+            echo 'Deu ruim em: Endereco </br>'.'\n\n\n\n >>>'. $th->getMessage();
+            
+            
         }
-        
+        mysqli_close($conn);
 
     }
 
@@ -113,7 +116,7 @@
 
                         <div class="mb-3">
                             <label for="cademail" class="col-form-label">CNPJ:</label>
-                            <input type="number" name="cnpjEmpresa" class="form-control" id="cnpjEmpresa" placeholder="Digite seu CNPJ">
+                            <input type="text" name="cnpjEmpresa" class="form-control" id="cnpjEmpresa" placeholder="Digite seu CNPJ">
                         </div>
 
                         <div class="mb-3">
@@ -127,27 +130,27 @@
                         <h6>Endereço</h6>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Cep:</label>
-                            <input type="password" name="cep" class="form-control" id="cep"  placeholder="Informe seu cep">
+                            <input type="text" name="cep" class="form-control" id="cep"  placeholder="Informe seu cep">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Estado:</label>
-                            <input type="password" name="estado" class="form-control" id="estado"  placeholder="Informe seu Estado">
+                            <input type="text" name="estado" class="form-control" id="estado"  placeholder="Informe seu Estado">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Município:</label>
-                            <input type="password" name="municipio" class="form-control" id="municipio"  placeholder="Informe seu Município ">
+                            <input type="text" name="municipio" class="form-control" id="municipio"  placeholder="Informe seu Município ">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Bairro:</label>
-                            <input type="password" name="bairro" class="form-control" id="bairro"  placeholder="Informe seu Bairro">
+                            <input type="text" name="bairro" class="form-control" id="bairro"  placeholder="Informe seu Bairro">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Logradouro:</label>
-                            <input type="password" name="logradouro" class="form-control" id="logradouro"  placeholder="Informe seu logradouro">
+                            <input type="text" name="logradouro" class="form-control" id="logradouro"  placeholder="Informe seu logradouro">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Número:</label>
-                            <input type="password" name="numero" class="form-control" id="numero"  placeholder="Informe seu número">
+                            <input type="text" name="numero" class="form-control" id="numero"  placeholder="Informe seu número">
                         </div>
                         <div class="mb-3">
                             <input type="submit" id="cadUsuario" name="cadUsuario">
@@ -253,5 +256,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="js/custom.js"></script>
 </body>
+<footer>
+<script>
+    if ( window.history.replaceState ) {
+  window.history.replaceState( null, null, window.location.href );
+}
+</script>
+</footer>
 
 </html>
