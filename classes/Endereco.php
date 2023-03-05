@@ -14,43 +14,43 @@ class Oficina{
         $this -> Municipio_idMunicipio = $Municipio_idMunicipio;
     }
 
-    function get_cep(){
+    public function get_cep(){
         return $this->cep;
     }
 
-    function set_cep($cep){
+    public function set_cep($cep){
         $this -> cep = $cep;
     }
 
-    function get_numero(){
+    public function get_numero(){
         return $this->numero;
     }
 
-    function set_numero($numero){
+    public function set_numero($numero){
         $this -> numero = $numero;
     }
 
-    function get_bairro(){
+    public function get_bairro(){
         return $this->bairro;
     }
 
-    function set_bairro($bairro){
+    public function set_bairro($bairro){
         $this -> bairro = $bairro;
     }
 
-    function get_FkOficina(){
+    public function get_FkOficina(){
         return $this->Oficina_idEmpresa;
     }
 
-    function set_FkOficina($FkOficina){
+    public function set_FkOficina($FkOficina){
         $this -> Oficina_idEmpresa = $FkOficina;
     }
 
-    function get_FkMunicipio(){
+    public function get_FkMunicipio(){
         return $this->Municipio_idMunicipio;
     }
 
-    function set_FkMunicipip($FkMunicipi){
+    public function set_FkMunicipip($FkMunicipi){
         $this -> Municipio_idMunicipio = $FkMunicipi;
     }
 

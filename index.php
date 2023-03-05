@@ -5,9 +5,10 @@
         print_r($_POST['cnpjEmpresa']);
         print_r($_POST['inscricaoEmpresa']);
         print_r($_POST['razaoEmpresa']); */
-
+        include('config.php');
+        include('classes/Oficina.php');
         try {
-            include('config.php');
+            $oficina = new Oficina( $_POST['nameEmpresa'], $_POST['cnpjEmpresa'], $_POST['inscricaoEmpresa'], $_POST['razaoEmpresa']);
             $nameEmpresa = $_POST['nameEmpresa'];  
             $cnpjEmpresa = $_POST['cnpjEmpresa'];
             $inscricaoEmpresa = $_POST['inscricaoEmpresa'];
@@ -16,11 +17,22 @@
             $result = mysqli_query($conn, "INSERT INTO oficina(nome,cnpj,inscricao,razao) VALUES('$nameEmpresa','$cnpjEmpresa','$inscricaoEmpresa', '$razaoEmpresa')");
             
         } catch (\Throwable $th) {
-            echo 'Deu ruim :/'. $th->getMessage();
+            echo 'Deu ruim: Empresa'. $th->getMessage();
         }
 
-        
+        try {
+            $cep = $_POST['cep'];  
+            $estado = $_POST['estado'];
+            $municipio = $_POST['municipio'];
+            $razaoEmpresa = $_POST['bairro'];
+            $inscricaoEmpresa = $_POST['logradouro'];
+            $razaoEmpresa = $_POST['numero'];
 
+            $result = mysqli_query($conn, "INSERT INTO oficina(nome,cnpj,inscricao,razao) VALUES('$nameEmpresa','$cnpjEmpresa','$inscricaoEmpresa', '$razaoEmpresa')");//code...
+        } catch (\Throwable $th) {
+
+        }
+        
 
     }
 
@@ -127,7 +139,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Bairro:</label>
-                            <input type="password" name="barrio" class="form-control" id="bairro"  placeholder="Informe seu Bairro">
+                            <input type="password" name="bairro" class="form-control" id="bairro"  placeholder="Informe seu Bairro">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Logradouro:</label>
