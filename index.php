@@ -18,8 +18,8 @@
             include_once('classes/Endereco.php');
             
             $oficina = new Oficina( $_POST['nameEmpresa'], $_POST['cnpjEmpresa'], $_POST['inscricaoEmpresa'], $_POST['inscricaoEmpresa']);
-            $result = $conn->query("INSERT INTO oficina VALUES(null, '{$oficina->get_nome()}','{$oficina->get_cnpj()}','
-            {$oficina->get_inscricao()}', '{$oficina->get_razao()}')");
+            $result = $conn->query("INSERT INTO oficina VALUES(null, '{$oficina->get_nome()}','{$oficina->get_cnpj()}',
+            {$oficina->get_inscricao()}, '{$oficina->get_razao()}')");
             
             $res = mysqli_query($conn, 'select max(idEmpresa) from oficina;');
             $max = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -38,7 +38,29 @@
              
         }
         mysqli_close($conn);
+    }
+    elseif (isset($_POST['deletar'])) {
+        include_once('config.php');
+        if ($_POST['delnome'] == null) {
+            throw new Exception("Insira a oficina a ser deletada!", 1);
+        }
+        $result = $conn->query("SELECT idEmpresa FROM oficina WHERE cnpj = {$_POST['delnome']}");
+         if (mysqli_num_rows($result)==0){
+            throw new Exception("Oficina não encontrada!", 1);
+        }
+        else {
+            try {
+                $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                $res = $conn->query("delete from endereco where Oficina_idEmpresa = {$result[0]['idEmpresa']};");
+                $res = $conn->query("delete from oficina where idEmpresa = {$result[0]['idEmpresa']};");
+                echo 'Oficina deletada com sucesso!';
 
+            } catch (\Throwable $th) {
+            echo 'Deu ruim: </br>'.'>>>>>>>>>'. $th->getMessage();
+            }
+        }
+        
+        mysqli_close($conn);
     }
 
 ?>
@@ -237,17 +259,17 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="cad-alterar-form">
+                    <form id="cad-alterar-form" action="index.php" method="POST">
                         <span id="msgAlertErroCad"></span>
 
                         <div class="mb-3">
                             <label for="cadnome" class="col-form-label">Informe o CNPJ da Oficina:</label>
-                            <input type="text" name="cadnome" class="form-control" id="cadnome" placeholder="CNPJ">
+                            <input type="text" name="delnome" class="form-control" id="delnome" placeholder="CNPJ">
 
                         </div>
 
                         <div class="mb-3">
-                            <input type="submit" class="btn btn-outline-success bt-sm" id="cad-usuario-btn" value="DELETAR">
+                            <input type="submit" class="btn btn-outline-success bt-sm" id="deletar" value="DELETAR" name="deletar">
                         </div>
                     </form>
                 </div>
