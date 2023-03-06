@@ -3,6 +3,7 @@ class Endereco{
     private $cep;
     private $numero;
     private $bairro;
+    private $logradouro;
     private $Oficina_idEmpresa;
     private $Municipio_idMunicipio;
 
@@ -38,6 +39,14 @@ class Endereco{
         $this -> bairro = $bairro;
     }
 
+    public function get_logradouro(){
+        return $this->logradouro;
+    }
+
+    public function set_logradouro($logradouro){
+        $this -> logradouro = $logradouro;
+    }
+
     public function get_FkOficina(){
         return $this->Oficina_idEmpresa;
     }
@@ -50,7 +59,7 @@ class Endereco{
         return $this->Municipio_idMunicipio;
     }
 
-    public function set_FkMunicipip($FkMunicipi){
+    public function set_FkMunicipio($FkMunicipi){
         $this -> Municipio_idMunicipio = $FkMunicipi;
     }
 

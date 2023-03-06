@@ -12,7 +12,8 @@
             
             $oficina = new Oficina( $_POST['nameEmpresa'], $_POST['cnpjEmpresa'], $_POST['inscricaoEmpresa'], $_POST['razaoEmpresa']);
 
-            $result = $conn->query("INSERT INTO oficina VALUES(null, '{$oficina->get_nome()}','{$oficina->get_cnpj()}','{$oficina->get_inscricao()}', '{$oficina->get_razao()}')");
+            $result = $conn->query("INSERT INTO oficina VALUES(null, '{$oficina->get_nome()}','{$oficina->get_cnpj()}','
+            {$oficina->get_inscricao()}', '{$oficina->get_razao()}')");
             
         } catch (\Throwable $th) {
             echo 'Deu ruim em: Oficina </br>'.'\n\n\n\n >>>'. $th->getMessage();
@@ -27,8 +28,9 @@
             $res2 = mysqli_query($conn, "select idMunicipio from municipio where Municipio like '{$_POST['municipio']}';");
             $idmun = mysqli_fetch_all($res2, MYSQLI_ASSOC);
             $idmun = $idmun[0]['idMunicipio'];
-            $endereco = new Endereco( $_POST['cep'], $_POST['estado'], $_POST['estado'], $_POST['municipio'], $_POST['bairro'], $_POST['logradouro'], $_POST['numero'], $max, $idmun);
-            
+            $endereco = new Endereco( $_POST['cep'], $_POST['numero'],$_POST['bairro'],$_POST['logradouro'], $max, $idmun);
+            $result = $conn->query("INSERT INTO endereco VALUES (null, '{$endereco->get_cep()}','{$endereco->get_numero()}','{$endereco->get_bairro()}', 
+            '{$endereco->get_logradouro()}','{$endereco->get_FkOficina()}','{$endereco->get_FkMunicipio()}';");
             
         } catch (\Throwable $th) {
             echo 'Deu ruim em: Endereco </br>'.'\n\n\n\n >>>'. $th->getMessage();
