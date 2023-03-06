@@ -7,10 +7,17 @@
         print_r($_POST['razaoEmpresa']); */
         include_once('config.php');
         try {
-            
+
+            if ($_POST['nameEmpresa'] == null || $_POST['cnpjEmpresa']  == null ||  $_POST['inscricaoEmpresa'] == null||  $_POST['cep'] == null ||  $_POST['numero'] == null||
+            $_POST['bairro']== null||$_POST['logradouro']==null) {
+                throw new Exception("Preencha todos os campos!", 1);
+                
+            } else {
+
             include_once('classes/Oficina.php');
+            include_once('classes/Endereco.php');
             
-            $oficina = new Oficina( $_POST['nameEmpresa'], $_POST['cnpjEmpresa'], $_POST['inscricaoEmpresa'], $_POST['razaoEmpresa']);
+            $oficina = new Oficina( $_POST['nameEmpresa'], $_POST['cnpjEmpresa'], $_POST['inscricaoEmpresa'], $_POST['inscricaoEmpresa']);
             $result = $conn->query("INSERT INTO oficina VALUES(null, '{$oficina->get_nome()}','{$oficina->get_cnpj()}','
             {$oficina->get_inscricao()}', '{$oficina->get_razao()}')");
             
@@ -24,7 +31,7 @@
             
             $endereco = new Endereco( $_POST['cep'], $_POST['numero'],$_POST['bairro'],$_POST['logradouro'], $max, $idmun);
             $result = $conn->query("INSERT INTO endereco VALUES (null, '{$endereco->get_cep()}','{$endereco->get_numero()}','{$endereco->get_bairro()}', 
-            '{$endereco->get_logradouro()}',{$endereco->get_FkOficina()},{$endereco->get_FkMunicipio()});");
+            '{$endereco->get_logradouro()}',{$endereco->get_FkOficina()},{$endereco->get_FkMunicipio()});");}
             
         } catch (\Throwable $th) {
             echo 'Deu ruim: </br>'.'>>>>>>>>>'. $th->getMessage();
