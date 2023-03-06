@@ -15,13 +15,6 @@
             $result = $conn->query("INSERT INTO oficina VALUES(null, '{$oficina->get_nome()}','{$oficina->get_cnpj()}','
             {$oficina->get_inscricao()}', '{$oficina->get_razao()}')");
             
-        } catch (\Throwable $th) {
-            echo 'Deu ruim em: Oficina </br>'.'\n\n\n\n >>>'. $th->getMessage();
-        }
-
-        try {
-            include_once('classes/Endereco.php');
-            
             $res = mysqli_query($conn, 'select max(idEmpresa) from oficina;');
             $max = mysqli_fetch_all($res, MYSQLI_ASSOC);
             $max = $max[0]['max(idEmpresa)'];
@@ -30,7 +23,7 @@
             $idmun = $idmun[0]['idMunicipio'];
             $endereco = new Endereco( $_POST['cep'], $_POST['numero'],$_POST['bairro'],$_POST['logradouro'], $max, $idmun);
             $result = $conn->query("INSERT INTO endereco VALUES (null, '{$endereco->get_cep()}','{$endereco->get_numero()}','{$endereco->get_bairro()}', 
-            '{$endereco->get_logradouro()}','{$endereco->get_FkOficina()}','{$endereco->get_FkMunicipio()}';");
+            '{$endereco->get_logradouro()}',{$endereco->get_FkOficina()},{$endereco->get_FkMunicipio()});");
             
         } catch (\Throwable $th) {
             echo 'Deu ruim em: Endereco </br>'.'\n\n\n\n >>>'. $th->getMessage();

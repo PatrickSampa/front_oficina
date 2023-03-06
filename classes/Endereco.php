@@ -7,10 +7,11 @@ class Endereco{
     private $Oficina_idEmpresa;
     private $Municipio_idMunicipio;
 
-    function __construct($cep, $numero, $bairro, $Oficina_idEmpresa, $Municipio_idMunicipio){
+    function __construct($cep, $numero, $bairro, $logradouro, $Oficina_idEmpresa, $Municipio_idMunicipio){
         $this -> cep = $cep;
         $this -> numero = $numero;
         $this -> bairro = $bairro;
+        $this -> logradouro = $logradouro;
         $this -> Oficina_idEmpresa = $Oficina_idEmpresa;
         $this -> Municipio_idMunicipio = $Municipio_idMunicipio;
     }
