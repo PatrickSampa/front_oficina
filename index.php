@@ -61,6 +61,39 @@
         }
         
         mysqli_close($conn);
+    }else if(isset($_POST['acessar'])){
+        include_once('config.php');
+        if($_POST['cnpjres']== null){
+            throw new Exception("CNPJ Incorreto!! Insira o cnpj da oficina corretamente", 1);
+        }
+        $result = $conn->query("SELECT idEmpresa FROM oficina WHERE cnpj = {$_POST['cnpjres']}");
+        $result2 = $conn->query("SELECT * FROM oficina WHERE cnpj = {$_POST['cnpjres']}");
+        if (mysqli_num_rows($result2)==0){
+            throw new Exception("Oficina não encontrada!", 1);
+        }else{
+            try{
+                //$res = $conn->query("delete from endereco where Oficina_idEmpresa = {$result[0]['idEmpresa']};");
+                $qtd = $result2->num_rows;
+                if($qtd>0){
+                    echo "<table>";
+                    while($row = $result2->fetch_object()){
+                        echo "<tr>";
+                        echo "<td>".$row->nome."</td>"; 
+                        echo "<td>".$row->cnpj."</td>";
+                        echo "<td>".$row->inscricao."</td>";
+                        echo "<td>".$row->razao."</td>";
+                        echo "</tr>";
+                    }    
+                    echo "</table>";    
+                }
+    
+            }catch (\Throwable $th) {
+                echo 'Deu ruim: </br>'.'>>>>>>>>>'. $th->getMessage();
+    
+            }
+        }
+        
+        mysqli_close($conn);
     }
 
 ?>
