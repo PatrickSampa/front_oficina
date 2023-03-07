@@ -31,7 +31,6 @@
             <div id='dados-usuario'>
                 <button type='button' class='btn btn-outline-dark' data-bs-toggle='modal' data-bs-target='#cadUsuarioModal'>Cadastrar</button>
                 <button type='button' class='btn btn-outline-primary m-3' data-bs-toggle='modal' data-bs-target='#loginModal'>Acessar</button>
-                <button type='button' class='btn btn-outline-danger' data-bs-toggle='modal' data-bs-target='#cadDeletarModal'>Deletar</button>
             </div>
         
         <div class="m-5">
@@ -39,6 +38,7 @@
         </div>
     </div>
     <?php
+        $id = 0;
         $nome = '';
         $cnpj = '';
         $inscricao = '';
@@ -59,9 +59,9 @@
                     //$res = $conn->query("delete from endereco where Oficina_idEmpresa = {$result[0]['idEmpresa']};");
                     $qtd = $result2->num_rows;
                     if($qtd>0){
-                        echo "<table class='table table-dark table-bordered'>";
+                        echo "<table class='table table-striped table-bordered'>";
                         echo "<thead/>";
-                        echo "<tr class='table-active'>";
+                        echo "<tr>";
                         echo "<th>Nome</th>";
                         echo "<th>CNPJ</th>";
                         echo "<th>Inscrição</th>";
@@ -106,9 +106,9 @@
                     //$res = $conn->query("delete from endereco where Oficina_idEmpresa = {$result[0]['idEmpresa']};");
                     $qtd = $result2->num_rows;
                     if($qtd>0){
-                        echo "<table class='table table-dark table-bordered' >";
+                        echo "<table class='table table-bordered' >";
                         echo "<thead >";
-                        echo "<tr class='table-active'>";
+                        echo "<tr>";
                         echo "<th>Nome</th>";
                         echo "<th>CNPJ</th>";
                         echo "<th>Inscrição</th>";
@@ -117,7 +117,7 @@
                         echo "<th>Número</th>";
                         echo "<th>Bairro</th>";
                         echo "<th>Município</th>";
-                        echo "<th> Editar</th>";
+                        echo "<td>Editar</td>";
                         
                         echo "</tr>";
                         while($row = $result2->fetch_object()){
@@ -134,7 +134,9 @@
                             echo "<th>".$row2->numero."</th>";
                             echo "<th>".$row2->bairro."</th>";
                             echo "<th>".$row3->Municipio."</th>";
-                            echo "<th><button type='button' class='btn btn-outline-success' data-bs-toggle='modal' data-bs-target='#cadAlterarModal'>Editar</button></th>";
+                            echo "<th><button type='button' class='btn btn-outline-success' data-bs-toggle='modal' data-bs-target='#cadAlterarModal'>Editar</button>";
+                            echo "\n";
+                            echo "<button type='button' class='btn btn-outline-danger' data-bs-toggle='modal' data-bs-target='#cadDeletarModal'>Excluir</button></th>";
                             echo "</tr>";
                             $nome = $row->nome;
                             $cnpj = $row->cnpj;
@@ -145,6 +147,7 @@
                             $bairro = $row2->bairro;
                             $logradouro = $row2->Logradouro;
                             $numero = $row2->numero;
+                            $id = $row->idEmpresa;
                         }    
                         echo "</table>";    
                     }
@@ -157,9 +160,6 @@
 
             
         }
-        
-
-
     ?>
 
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
@@ -349,7 +349,9 @@
 
                         <div class="mb-3">
                             <label for="cadnome" class="col-form-label">Informe o CNPJ da Oficina:</label>
-                            <input type="text" name="delnome" class="form-control" id="delnome" placeholder="CNPJ">
+                            <input type="text" name="delnome" class="form-control" id="delnome" placeholder="CNPJ" value=<?php
+                            echo $cnpj;
+                            ?>>
 
                         </div>
 
