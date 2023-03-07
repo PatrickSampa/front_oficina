@@ -8,8 +8,6 @@
     
     if($conn->connect_errno){
         echo "Erro";
-    }else{
-        echo "Connectado </br>";
     }
 
 
