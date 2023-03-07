@@ -63,7 +63,7 @@
             }
         }
         
-        mysqli_close($conn);
+        
     }
 
 ?>
@@ -97,6 +97,18 @@
         </div>
     </div>
     <?php
+        $nome = '';
+        $cnpj = '';
+        $inscricao = '';
+        $razao = '';
+        $cep = '';
+        $estado = '';
+        $municipio = '';
+        $bairro = '';
+        $logradouro = '';
+        $numero = 0;
+        
+        
         if(isset($_POST['acessar'])){
             include_once('config.php');
             if($_POST['cnpjres']== null){
@@ -180,9 +192,18 @@
                             echo "<th>".$row2->numero."</th>";
                             echo "<th>".$row2->bairro."</th>";
                             echo "<th>".$row3->Municipio."</th>";
-                            
                             echo "<th><button type='button' class='btn btn-outline-blue' data-bs-toggle='modal' data-bs-target='#cadAlterarModal'>Editar</button></th>";
                             echo "</tr>";
+                            $nome = $row->nome;
+                            $cnpj = $row->cnpj;
+                            $inscricao = $row->inscricao;
+                            $razao = $row->razao;
+                            $cep = $row2->CEP;
+                            $estado = $row2->estado;
+                            $municipio = $row3->Municipio;
+                            $bairro = $row2->bairro;
+                            $logradouro = $row2->logradouro;
+                            $numero = $row2->numero;
                         }    
                         echo "</table>";    
                     }
@@ -192,6 +213,7 @@
         
                 }
             }
+
             
         }
         
@@ -289,10 +311,7 @@
 
     
 <div class="modal fade" id="cadAlterarModal" tabindex="-1" aria-labelledby="cadAlterarModalLabel" aria-hidden="true">
-         <?php 
-    
-    
-    ?>
+         
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -306,31 +325,33 @@
                         <div class="mb-3">
                             <label for="cademail" class="col-form-label">CNPJ:</label>
                             <input type="text" name="cnpj" class="form-control" id="cnpj" placeholder="Digite seu CNPJ" value="<?php 
-                            include_once('config.php');
-                            $result2 = $conn->query("SELECT * FROM oficina");
-                            $row = $result2->fetch_object();
-                            echo $row->nome;
-                                 ?>" >
+                            echo $cnpj;
+                                 ?>">
                         </div>
 
                         <div class="mb-3">
                             <label for="cadnome" class="col-form-label">Nome:</label>
-                            <input type="text" name="cadnome" class="form-control" id="cadnome" placeholder="Digite o nome da empresa">
+                            <input type="text" name="cadnome" class="form-control" id="cadnome" placeholder="Digite o nome da empresa" valuevalue="<?php
+                            echo $nome;
+                                 ?>" >
                         </div>
-
 
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Inscrição:</label>
-                            <input type="text" name="inscricao" class="form-control" id="inscricao"  placeholder="Digite sua Inscrição">
+                            <input type="text" name="inscricao" class="form-control" id="inscricao"  placeholder="Digite sua Inscrição" value="<?php 
+                            echo $inscricao;
+                                 ?>">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Razão:</label>
-                            <input type="text" name="razao" class="form-control" id="razao"  placeholder="Digite sua Inscrição">
+                            <input type="text" name="razao" class="form-control" id="razao"  placeholder="Digite sua Inscrição" value="<?php 
+                            echo $razao;
+                                 ?>">
                         </div>
                         <h6>Endereço</h6>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Cep:</label>
-                            <input type="text" name="cep" class="form-control" id="cep"  placeholder="Informe seu cep">
+                            <input type="text" name="cep" class="form-control" id="cep"  placeholder="Informe seu cep" >
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Estado:</label>
