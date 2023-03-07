@@ -1,9 +1,9 @@
 <?php
 include_once('config.php');        
-if ($_POST['delnome'] == null) {
+if ($_POST['idEmpresa'] == null) {
     throw new Exception("Insira a oficina a ser deletada!", 1);
 }
-$result = $conn->query("SELECT idEmpresa FROM oficina WHERE cnpj = {$_POST['delnome']}");
+$result = $conn->query("SELECT idEmpresa FROM oficina WHERE idEmpresa = {$_POST['idEmpresa']}");
  if (mysqli_num_rows($result)==0){
     throw new Exception("Oficina não encontrada!", 1);
 }

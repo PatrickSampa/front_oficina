@@ -1,12 +1,14 @@
 <?php
 
     if(isset($_POST['cadUsuario'])){
-        include_once('crud/create.php');
-    }
-    elseif (isset($_POST['deletar'])) {
+        include_once('crud/create.php');}
+    
+    if (isset($_POST['deletar'])) {
         include('crud/delete.php');
-        
     }
+ 
+        
+    
 
 ?>
 <!DOCTYPE html>
@@ -49,6 +51,8 @@
         $bairro = '';
         $logradouro = '';
         $numero = 0;
+        $list_obj = [];
+        $i = 0;
         
         
         if(isset($_POST['acessar'])){
@@ -70,6 +74,7 @@
                         echo "<th>Número</th>";
                         echo "<th>Bairro</th>";
                         echo "<th>Município</th>";
+                        echo "<td>Editar</td>";
                         echo "</tr>";
                         while($row = $result2->fetch_object()){
                             $result = $conn->query("SELECT * FROM endereco WHERE Oficina_idEmpresa = $row->idEmpresa");
@@ -85,7 +90,16 @@
                             echo "<th>".$row2->numero."</th>";
                             echo "<th>".$row2->bairro."</th>";
                             echo "<th>".$row3->Municipio."</th>";
+                            echo "<th>
+                            <form method='post' action='index.php'>
+                            <input type='submit' class='btn btn-outline-success bt-sm' id='deletar' value='DELETAR' name='deletar'>
+                            <input type='hidden' name='idEmpresa' value= {$row->idEmpresa} id='idEmpresa'/>
+                            </form>";
+                            
+                            echo "\n";
+
                             echo "</tr>";
+                            $i+=1;
                         }    
                         echo "</table>";    
                     }
@@ -147,7 +161,6 @@
                             $bairro = $row2->bairro;
                             $logradouro = $row2->Logradouro;
                             $numero = $row2->numero;
-                            $id = $row->idEmpresa;
                         }    
                         echo "</table>";    
                     }
@@ -349,9 +362,8 @@
 
                         <div class="mb-3">
                             <label for="cadnome" class="col-form-label">Informe o CNPJ da Oficina:</label>
-                            <input type="text" name="delnome" class="form-control" id="delnome" placeholder="CNPJ" value=<?php
-                            echo $cnpj;
-                            ?>>
+                            <input type="text" name="delnome" class="form-control" id="delnome" placeholder="CNPJ" value= '<?php $_POST['idEmpresa']
+ ?>'>
 
                         </div>
 
