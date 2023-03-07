@@ -1,68 +1,10 @@
 <?php
 
     if(isset($_POST['cadUsuario'])){
-        /* print_r($_POST['nameEmpresa']);
-        print_r($_POST['cnpjEmpresa']);
-        print_r($_POST['inscricaoEmpresa']);
-        print_r($_POST['razaoEmpresa']); */
-        include_once('config.php');
-        try {
-
-            if ($_POST['nameEmpresa'] == null || $_POST['cnpjEmpresa']  == null ||  $_POST['inscricaoEmpresa'] == null||  $_POST['cep'] == null ||  $_POST['numero'] == null||
-            $_POST['bairro']== null||$_POST['logradouro']==null) {
-                throw new Exception("Preencha todos os campos!", 1);
-                
-            } else {
-
-            include_once('classes/Oficina.php');
-            include_once('classes/Endereco.php');
-            
-            $oficina = new Oficina( $_POST['nameEmpresa'], $_POST['cnpjEmpresa'], $_POST['inscricaoEmpresa'], $_POST['inscricaoEmpresa']);
-            $result = $conn->query("INSERT INTO oficina VALUES(null, '{$oficina->get_nome()}','{$oficina->get_cnpj()}',
-            {$oficina->get_inscricao()}, '{$oficina->get_razao()}')");
-            
-            $res = mysqli_query($conn, 'select max(idEmpresa) from oficina;');
-            $max = mysqli_fetch_all($res, MYSQLI_ASSOC);
-            $max = $max[0]['max(idEmpresa)'];
-            
-            $res2 = mysqli_query($conn, "select idMunicipio from municipio where Municipio like '{$_POST['municipio']}';");
-            $idmun = mysqli_fetch_all($res2, MYSQLI_ASSOC);
-            $idmun = $idmun[0]['idMunicipio'];
-            
-            $endereco = new Endereco( $_POST['cep'], $_POST['numero'],$_POST['bairro'],$_POST['logradouro'], $max, $idmun);
-            $result = $conn->query("INSERT INTO endereco VALUES (null, '{$endereco->get_cep()}','{$endereco->get_numero()}','{$endereco->get_bairro()}', 
-            '{$endereco->get_logradouro()}',{$endereco->get_FkOficina()},{$endereco->get_FkMunicipio()});");}
-            echo "<div class='alert alert-success' role='alert' style='text-align: center;'>
-            Oficina Cadastrada com sucesso
-          </div>";
-            
-        } catch (\Throwable $th) {
-            echo 'Deu ruim: </br>'.'>>>>>>>>>'. $th->getMessage();
-             
-        }
-        mysqli_close($conn);
+        include_once('crud/create.php');
     }
     elseif (isset($_POST['deletar'])) {
-        include_once('config.php');
-        if ($_POST['delnome'] == null) {
-            throw new Exception("Insira a oficina a ser deletada!", 1);
-        }
-        $result = $conn->query("SELECT idEmpresa FROM oficina WHERE cnpj = {$_POST['delnome']}");
-         if (mysqli_num_rows($result)==0){
-            throw new Exception("Oficina não encontrada!", 1);
-        }
-        else {
-            try {
-                $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                $res = $conn->query("delete from endereco where Oficina_idEmpresa = {$result[0]['idEmpresa']};");
-                $res = $conn->query("delete from oficina where idEmpresa = {$result[0]['idEmpresa']};");
-                echo 'Oficina deletada com sucesso!';
-
-            } catch (\Throwable $th) {
-            echo 'Deu ruim: </br>'.'>>>>>>>>>'. $th->getMessage();
-            }
-        }
-        
+        include('crud/delete.php');
         
     }
 
@@ -117,9 +59,9 @@
                     //$res = $conn->query("delete from endereco where Oficina_idEmpresa = {$result[0]['idEmpresa']};");
                     $qtd = $result2->num_rows;
                     if($qtd>0){
-                        echo "<table class='table table-hover table-striped table-bordered'>";
-                        echo "<thead class='table-dark'>";
-                        echo "<tr>";
+                        echo "<table class='table table-dark table-bordered'>";
+                        echo "<thead/>";
+                        echo "<tr class='table-active'>";
                         echo "<th>Nome</th>";
                         echo "<th>CNPJ</th>";
                         echo "<th>Inscrição</th>";
@@ -134,7 +76,7 @@
                             $row2 = $result->fetch_object();
                             $result3 = $conn->query("SELECT * FROM municipio WHERE idMunicipio = $row2->Municipio_idMunicipio");
                             $row3 = $result3->fetch_object();
-                            echo "<tr>";
+                            echo "<tr class='table-active'>";
                             echo "<th>".$row->nome."</th>"; 
                             echo "<th>".$row->cnpj."</th>";
                             echo "<th>".$row->inscricao."</th>";
@@ -164,9 +106,9 @@
                     //$res = $conn->query("delete from endereco where Oficina_idEmpresa = {$result[0]['idEmpresa']};");
                     $qtd = $result2->num_rows;
                     if($qtd>0){
-                        echo "<table class='table table-hover'>";
-                        echo "<thead class='table-dark'>";
-                        echo "<tr>";
+                        echo "<table class='table table-dark table-bordered' >";
+                        echo "<thead >";
+                        echo "<tr class='table-active'>";
                         echo "<th>Nome</th>";
                         echo "<th>CNPJ</th>";
                         echo "<th>Inscrição</th>";
@@ -192,7 +134,7 @@
                             echo "<th>".$row2->numero."</th>";
                             echo "<th>".$row2->bairro."</th>";
                             echo "<th>".$row3->Municipio."</th>";
-                            echo "<th><button type='button' class='btn btn-outline-blue' data-bs-toggle='modal' data-bs-target='#cadAlterarModal'>Editar</button></th>";
+                            echo "<th><button type='button' class='btn btn-outline-success' data-bs-toggle='modal' data-bs-target='#cadAlterarModal'>Editar</button></th>";
                             echo "</tr>";
                             $nome = $row->nome;
                             $cnpj = $row->cnpj;
@@ -330,7 +272,7 @@
 
                         <div class="mb-3">
                             <label for="cadnome" class="col-form-label">Nome:</label>
-                            <input type="text" name="cadnome" class="form-control" id="cadnome" placeholder="Digite o nome da empresa" valuevalue="<?php
+                            <input type="text" name="cadnome" class="form-control" id="cadnome" placeholder="Digite o nome da empresa" value="<?php
                             echo $nome;
                                  ?>" >
                         </div>
@@ -361,25 +303,25 @@
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Município:</label>
-                            <input type="text" name="municipio" class="form-control" id="municipio"  placeholder="Informe seu Município " <?php 
+                            <input type="text" name="municipio" class="form-control" id="municipio"  placeholder="Informe seu Município " value=<?php 
                             echo $municipio;
                                  ?>>
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Bairro:</label>
-                            <input type="text" name="barrio" class="form-control" id="bairro"  placeholder="Informe seu Bairro" <?php 
+                            <input type="text" name="barrio" class="form-control" id="bairro"  placeholder="Informe seu Bairro"value= <?php 
                             echo $bairro;
                                  ?>>
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Logradouro:</label>
-                            <input type="text" name="logradouro" class="form-control" id="logradouro"  placeholder="Informe seu logradouro" <?php 
+                            <input type="text" name="logradouro" class="form-control" id="logradouro"  placeholder="Informe seu logradouro"value= <?php 
                             echo $logradouro;
                                  ?>>
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Número:</label>
-                            <input type="text" name="numero" class="form-control" id="numero"  placeholder="Informe seu número" <?php 
+                            <input type="text" name="numero" class="form-control" id="numero"  placeholder="Informe seu número" value=<?php 
                             echo $numero;
                                  ?>>
                         </div>
