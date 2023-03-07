@@ -112,13 +112,25 @@
                         echo "<th>CNPJ</th>";
                         echo "<th>Inscrição</th>";
                         echo "<th>Razão</th>";
+                        echo "<th>CEP</th>";
+                        echo "<th>Número</th>";
+                        echo "<th>Bairro</th>";
+                        echo "<th>Município</th>";
                         echo "</tr>";
                         while($row = $result2->fetch_object()){
+                            $result = $conn->query("SELECT * FROM endereco WHERE Oficina_idEmpresa = $row->idEmpresa");
+                            $row2 = $result->fetch_object();
+                            $result3 = $conn->query("SELECT * FROM municipio WHERE idMunicipio = $row2->Municipio_idMunicipio");
+                            $row3 = $result3->fetch_object();
                             echo "<tr>";
                             echo "<th>".$row->nome."</th>"; 
                             echo "<th>".$row->cnpj."</th>";
                             echo "<th>".$row->inscricao."</th>";
                             echo "<th>".$row->razao."</th>";
+                            echo "<th>".$row2->CEP."</th>";
+                            echo "<th>".$row2->numero."</th>";
+                            echo "<th>".$row2->bairro."</th>";
+                            echo "<th>".$row3->Municipio."</th>";
                             echo "</tr>";
                         }    
                         echo "</table>";    
@@ -129,6 +141,7 @@
         
                 }
             }else{
+                //$result = $conn->query("SELECT Oficina_idEmpresa FROM endereco WHERE Oficina_idEmpresa = {$_POST['cnpjres']}");
                 $result2 = $conn->query("SELECT * FROM oficina WHERE cnpj = {$_POST['cnpjres']}");
                 if (mysqli_num_rows($result2)==0){
                     echo "<div class='alert alert-danger' role='alert' style='text-align: center;'>
@@ -146,13 +159,25 @@
                         echo "<th>CNPJ</th>";
                         echo "<th>Inscrição</th>";
                         echo "<th>Razão</th>";
+                        echo "<th>CEP</th>";
+                        echo "<th>Número</th>";
+                        echo "<th>Bairro</th>";
+                        echo "<th>Município</th>";
                         echo "</tr>";
                         while($row = $result2->fetch_object()){
+                            $result = $conn->query("SELECT * FROM endereco WHERE Oficina_idEmpresa = $row->idEmpresa");
+                            $row2 = $result->fetch_object();
+                            $result3 = $conn->query("SELECT * FROM municipio WHERE idMunicipio = $row2->Municipio_idMunicipio");
+                            $row3 = $result3->fetch_object();
                             echo "<tr>";
                             echo "<th>".$row->nome."</th>"; 
                             echo "<th>".$row->cnpj."</th>";
                             echo "<th>".$row->inscricao."</th>";
                             echo "<th>".$row->razao."</th>";
+                            echo "<th>".$row2->CEP."</th>";
+                            echo "<th>".$row2->numero."</th>";
+                            echo "<th>".$row2->bairro."</th>";
+                            echo "<th>".$row3->Municipio."</th>";
                             echo "</tr>";
                         }    
                         echo "</table>";    
