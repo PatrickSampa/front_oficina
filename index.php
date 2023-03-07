@@ -199,10 +199,9 @@
                             $inscricao = $row->inscricao;
                             $razao = $row->razao;
                             $cep = $row2->CEP;
-                            $estado = $row2->estado;
                             $municipio = $row3->Municipio;
                             $bairro = $row2->bairro;
-                            $logradouro = $row2->logradouro;
+                            $logradouro = $row2->Logradouro;
                             $numero = $row2->numero;
                         }    
                         echo "</table>";    
@@ -351,27 +350,38 @@
                         <h6>Endereço</h6>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Cep:</label>
-                            <input type="text" name="cep" class="form-control" id="cep"  placeholder="Informe seu cep" >
+                            <input type="text" name="cep" class="form-control" id="cep"  placeholder="Informe seu cep" value="<?php 
+                            echo $cep;
+                                 ?>">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Estado:</label>
-                            <input type="text" name="estado" class="form-control" id="estado"  placeholder="Informe seu Estado">
+                            <input type="text" name="estado" class="form-control" id="estado"  placeholder="Informe seu Estado" value="<?php 
+                                 ?>">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Município:</label>
-                            <input type="text" name="municipio" class="form-control" id="municipio"  placeholder="Informe seu Município ">
+                            <input type="text" name="municipio" class="form-control" id="municipio"  placeholder="Informe seu Município " <?php 
+                            echo $municipio;
+                                 ?>>
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Bairro:</label>
-                            <input type="text" name="barrio" class="form-control" id="bairro"  placeholder="Informe seu Bairro">
+                            <input type="text" name="barrio" class="form-control" id="bairro"  placeholder="Informe seu Bairro" <?php 
+                            echo $bairro;
+                                 ?>>
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Logradouro:</label>
-                            <input type="text" name="logradouro" class="form-control" id="logradouro"  placeholder="Informe seu logradouro">
+                            <input type="text" name="logradouro" class="form-control" id="logradouro"  placeholder="Informe seu logradouro" <?php 
+                            echo $logradouro;
+                                 ?>>
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Número:</label>
-                            <input type="text" name="numero" class="form-control" id="numero"  placeholder="Informe seu número">
+                            <input type="text" name="numero" class="form-control" id="numero"  placeholder="Informe seu número" <?php 
+                            echo $numero;
+                                 ?>>
                         </div>
 
 
