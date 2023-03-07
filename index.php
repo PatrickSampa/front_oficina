@@ -96,6 +96,83 @@
             <span id="msgAlert"></span>
         </div>
     </div>
+    <?php
+        if(isset($_POST['acessar'])){
+            include_once('config.php');
+            if($_POST['cnpjres']== null){
+                $result2 = $conn->query("SELECT * FROM oficina");
+                try{
+                    //$res = $conn->query("delete from endereco where Oficina_idEmpresa = {$result[0]['idEmpresa']};");
+                    $qtd = $result2->num_rows;
+                    if($qtd>0){
+                        echo "<table class='table table-hover'>";
+                        echo "<thead class='table-dark'>";
+                        echo "<tr>";
+                        echo "<th>Nome</th>";
+                        echo "<th>CNPJ</th>";
+                        echo "<th>Inscrição</th>";
+                        echo "<th>Razão</th>";
+                        echo "</tr>";
+                        while($row = $result2->fetch_object()){
+                            echo "<tr>";
+                            echo "<th>".$row->nome."</th>"; 
+                            echo "<th>".$row->cnpj."</th>";
+                            echo "<th>".$row->inscricao."</th>";
+                            echo "<th>".$row->razao."</th>";
+                            echo "</tr>";
+                        }    
+                        echo "</table>";    
+                    }
+        
+                }catch (\Throwable $th) {
+                    echo 'Deu ruim: </br>'.'>>>>>>>>>'. $th->getMessage();
+        
+                }
+            }else{
+                $result2 = $conn->query("SELECT * FROM oficina WHERE cnpj = {$_POST['cnpjres']}");
+                if (mysqli_num_rows($result2)==0){
+                    echo "<div class='alert alert-danger' role='alert' style='text-align: center;'>
+                    Oficina não encontrada
+                  </div>";
+                }                
+                try{
+                    //$res = $conn->query("delete from endereco where Oficina_idEmpresa = {$result[0]['idEmpresa']};");
+                    $qtd = $result2->num_rows;
+                    if($qtd>0){
+                        echo "<table class='table table-hover'>";
+                        echo "<thead class='table-dark'>";
+                        echo "<tr>";
+                        echo "<th>Nome</th>";
+                        echo "<th>CNPJ</th>";
+                        echo "<th>Inscrição</th>";
+                        echo "<th>Razão</th>";
+                        echo "</tr>";
+                        while($row = $result2->fetch_object()){
+                            echo "<tr>";
+                            echo "<th>".$row->nome."</th>"; 
+                            echo "<th>".$row->cnpj."</th>";
+                            echo "<th>".$row->inscricao."</th>";
+                            echo "<th>".$row->razao."</th>";
+                            echo "</tr>";
+                        }    
+                        echo "</table>";    
+                    }
+        
+                }catch (\Throwable $th) {
+                    echo 'Deu ruim: </br>'.'>>>>>>>>>'. $th->getMessage();
+        
+                }
+            }
+            
+            
+
+            
+            
+            mysqli_close($conn);
+        }
+
+
+    ?>
 
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -105,14 +182,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="login-usuario-form">
+                    <form id="mostrat-usuario-form" action="index.php" method="POST">
                         <span id="msgAlertErroLogin"></span>
                         <div class="mb-3">
-                            <label for="email" class="col-form-label">Informe o CNPJ da empresa: </label>
+                            <label for="cadnome" class="col-form-label">Informe o CNPJ da empresa: </label>
                             <input type="text" name="cnpjres" class="form-control" id="cnpjres" placeholder="CNPJ">
                         </div>
                         <div class="mb-3">
-                            <input type="submit" class="btn btn-outline-primary bt-sm" id="login-usuario-btn" value="BUSCAR">
+                            <input type="submit" class="btn btn-outline-primary bt-sm" id="acessar" name="acessar" value="BUSCAR">
                         </div>
                         
                         
