@@ -32,6 +32,9 @@
             $endereco = new Endereco( $_POST['cep'], $_POST['numero'],$_POST['bairro'],$_POST['logradouro'], $max, $idmun);
             $result = $conn->query("INSERT INTO endereco VALUES (null, '{$endereco->get_cep()}','{$endereco->get_numero()}','{$endereco->get_bairro()}', 
             '{$endereco->get_logradouro()}',{$endereco->get_FkOficina()},{$endereco->get_FkMunicipio()});");}
+            echo "<div class='alert alert-success' role='alert' style='text-align: center;'>
+            Oficina Cadastrada com sucesso
+          </div>";
             
         } catch (\Throwable $th) {
             echo 'Deu ruim: </br>'.'>>>>>>>>>'. $th->getMessage();
@@ -310,36 +313,36 @@
 
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Inscrição:</label>
-                            <input type="password" name="inscricao" class="form-control" id="inscricao"  placeholder="Digite sua Inscrição">
+                            <input type="text" name="inscricao" class="form-control" id="inscricao"  placeholder="Digite sua Inscrição">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Razão:</label>
-                            <input type="password" name="razao" class="form-control" id="razao"  placeholder="Digite sua Inscrição">
+                            <input type="text" name="razao" class="form-control" id="razao"  placeholder="Digite sua Inscrição">
                         </div>
                         <h6>Endereço</h6>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Cep:</label>
-                            <input type="password" name="cep" class="form-control" id="cep"  placeholder="Informe seu cep">
+                            <input type="text" name="cep" class="form-control" id="cep"  placeholder="Informe seu cep">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Estado:</label>
-                            <input type="password" name="estado" class="form-control" id="estado"  placeholder="Informe seu Estado">
+                            <input type="text" name="estado" class="form-control" id="estado"  placeholder="Informe seu Estado">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Município:</label>
-                            <input type="password" name="municipio" class="form-control" id="municipio"  placeholder="Informe seu Município ">
+                            <input type="text" name="municipio" class="form-control" id="municipio"  placeholder="Informe seu Município ">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Bairro:</label>
-                            <input type="password" name="barrio" class="form-control" id="bairro"  placeholder="Informe seu Bairro">
+                            <input type="text" name="barrio" class="form-control" id="bairro"  placeholder="Informe seu Bairro">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Logradouro:</label>
-                            <input type="password" name="logradouro" class="form-control" id="logradouro"  placeholder="Informe seu logradouro">
+                            <input type="text" name="logradouro" class="form-control" id="logradouro"  placeholder="Informe seu logradouro">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Número:</label>
-                            <input type="password" name="numero" class="form-control" id="numero"  placeholder="Informe seu número">
+                            <input type="text" name="numero" class="form-control" id="numero"  placeholder="Informe seu número">
                         </div>
 
 
