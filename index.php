@@ -116,7 +116,6 @@
                         echo "<th>Número</th>";
                         echo "<th>Bairro</th>";
                         echo "<th>Município</th>";
-                        echo "<th>Editar</th>";
                         echo "</tr>";
                         while($row = $result2->fetch_object()){
                             $result = $conn->query("SELECT * FROM endereco WHERE Oficina_idEmpresa = $row->idEmpresa");
@@ -132,7 +131,6 @@
                             echo "<th>".$row2->numero."</th>";
                             echo "<th>".$row2->bairro."</th>";
                             echo "<th>".$row3->Municipio."</th>";
-                            echo "<th><button type='button' class='btn btn-outline-success' data-bs-toggle='modal' data-bs-target='#cadAlterarModal'>Editar</button></th>";
                             echo "</tr>";
                         }    
                         echo "</table>";    
@@ -165,6 +163,8 @@
                         echo "<th>Número</th>";
                         echo "<th>Bairro</th>";
                         echo "<th>Município</th>";
+                        echo "<th> Editar</th>";
+                        
                         echo "</tr>";
                         while($row = $result2->fetch_object()){
                             $result = $conn->query("SELECT * FROM endereco WHERE Oficina_idEmpresa = $row->idEmpresa");
@@ -180,6 +180,8 @@
                             echo "<th>".$row2->numero."</th>";
                             echo "<th>".$row2->bairro."</th>";
                             echo "<th>".$row3->Municipio."</th>";
+                            
+                            echo "<th><button type='button' class='btn btn-outline-blue' data-bs-toggle='modal' data-bs-target='#cadAlterarModal'>Editar</button></th>";
                             echo "</tr>";
                         }    
                         echo "</table>";    
@@ -190,11 +192,9 @@
         
                 }
             }
-            mysqli_close($conn);
+            
         }
-        elseif(isset($_POST['alter-user'])){
-            echo 'Salve Salve';
-        }
+        
 
 
     ?>
@@ -237,7 +237,7 @@
 
                         <div class="mb-3">
                             <label for="cadnome" class="col-form-label">Nome:</label>
-                            <input type="text" name="nameEmpresa" class="form-control" id="nameEmpresa" placeholder="Digite o nome completo">
+                            <input type="text" name="nameEmpresa" class="form-control" id="nameEmpresa" placeholder="Digite o nome da empresa">
                         </div>
 
                         <div class="mb-3">
@@ -287,7 +287,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="cadAlterarModal" tabindex="-1" aria-labelledby="cadAlterarModalLabel" aria-hidden="true">
+    
+<div class="modal fade" id="cadAlterarModal" tabindex="-1" aria-labelledby="cadAlterarModalLabel" aria-hidden="true">
+         <?php 
+    
+    
+    ?>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -299,14 +304,20 @@
                         <span id="msgAlertErroCad"></span>
 
                         <div class="mb-3">
-                            <label for="cadnome" class="col-form-label">Nome:</label>
-                            <input type="text" name="cadnome" class="form-control" id="cadnome" placeholder="Digite o nome completo">
+                            <label for="cademail" class="col-form-label">CNPJ:</label>
+                            <input type="text" name="cnpj" class="form-control" id="cnpj" placeholder="Digite seu CNPJ" value="<?php 
+                            include_once('config.php');
+                            $result2 = $conn->query("SELECT * FROM oficina");
+                            $row = $result2->fetch_object();
+                            echo $row->nome;
+                                 ?>" >
                         </div>
 
                         <div class="mb-3">
-                            <label for="cademail" class="col-form-label">CNPJ:</label>
-                            <input type="email" name="cnpj" class="form-control" id="cnpj" placeholder="Digite seu CNPJ">
+                            <label for="cadnome" class="col-form-label">Nome:</label>
+                            <input type="text" name="cadnome" class="form-control" id="cadnome" placeholder="Digite o nome da empresa">
                         </div>
+
 
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Inscrição:</label>
@@ -351,7 +362,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="modal fade" id="cadDeletarModal" tabindex="-1" aria-labelledby="cadDeletarModalLabel" aria-hidden="true">
         <div class="modal-dialog">
