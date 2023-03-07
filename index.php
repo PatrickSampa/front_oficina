@@ -86,12 +86,9 @@
                 Acessar
             </button>
         </div>-->
-
-        
             <div id='dados-usuario'>
                 <button type='button' class='btn btn-outline-dark' data-bs-toggle='modal' data-bs-target='#cadUsuarioModal'>Cadastrar</button>
                 <button type='button' class='btn btn-outline-primary m-3' data-bs-toggle='modal' data-bs-target='#loginModal'>Acessar</button>
-                <button type='button' class='btn btn-outline-success' data-bs-toggle='modal' data-bs-target='#cadAlterarModal'>Alterar dados</button>
                 <button type='button' class='btn btn-outline-danger' data-bs-toggle='modal' data-bs-target='#cadDeletarModal'>Deletar</button>
             </div>
         
@@ -108,7 +105,7 @@
                     //$res = $conn->query("delete from endereco where Oficina_idEmpresa = {$result[0]['idEmpresa']};");
                     $qtd = $result2->num_rows;
                     if($qtd>0){
-                        echo "<table class='table table-hover'>";
+                        echo "<table class='table table-hover table-striped table-bordered'>";
                         echo "<thead class='table-dark'>";
                         echo "<tr>";
                         echo "<th>Nome</th>";
@@ -119,6 +116,7 @@
                         echo "<th>Número</th>";
                         echo "<th>Bairro</th>";
                         echo "<th>Município</th>";
+                        echo "<th>Editar</th>";
                         echo "</tr>";
                         while($row = $result2->fetch_object()){
                             $result = $conn->query("SELECT * FROM endereco WHERE Oficina_idEmpresa = $row->idEmpresa");
@@ -134,6 +132,7 @@
                             echo "<th>".$row2->numero."</th>";
                             echo "<th>".$row2->bairro."</th>";
                             echo "<th>".$row3->Municipio."</th>";
+                            echo "<th><button type='button' class='btn btn-outline-success' data-bs-toggle='modal' data-bs-target='#cadAlterarModal'>Editar</button></th>";
                             echo "</tr>";
                         }    
                         echo "</table>";    
@@ -191,12 +190,10 @@
         
                 }
             }
-            
-            
-
-            
-            
             mysqli_close($conn);
+        }
+        elseif(isset($_POST['alter-user'])){
+            echo 'Salve Salve';
         }
 
 
