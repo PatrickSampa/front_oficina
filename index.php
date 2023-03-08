@@ -6,7 +6,8 @@
     if (isset($_POST['deletar'])) {
         include('crud/delete.php');
     }
- 
+
+    
         
     
 
@@ -20,7 +21,20 @@
     <link rel="shortcut icon" href="imagens/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <title>Oficina do Zé</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+<?php
+if(isset($_POST['Editar'])) {
+        echo "<script>
+        $(document).ready(function(){
+            $('#cadAlterarModal').modal('show');
+        });
+    </script>";
+
+    }?>
 </head>
+
+ 
 
 <body>
     <div class="container text-center">
@@ -92,14 +106,14 @@
                             echo "<th>".$row3->Municipio."</th>";
                             echo "<th>
                             <form method='post' action='index.php'>
-                            <input type='submit' class='btn btn-outline-success bt-sm' id='deletar' value='DELETAR' name='deletar'>
+                            <input type='submit' class='btn btn-outline-danger bt-sm' id='deletar' value='Excluir' name='deletar'>
                             <input type='hidden' name='idEmpresa' value= {$row->idEmpresa} id='idEmpresa'/>
-                            </form>";
-                            
-                            echo "\n";
-
+                            </form>
+                            <form method='post' action='index.php'>
+                            <input type='submit' class='btn btn-outline-success bt-sm' id='Editar' value='Editar' name='Editar'>
+                            <input type='hidden' name='idEmpresa' value= {$row->idEmpresa} id='idEmpresa'/>
+                            </form></th>";
                             echo "</tr>";
-                            $i+=1;
                         }    
                         echo "</table>";    
                     }
@@ -265,6 +279,7 @@
 
     
 <div class="modal fade" id="cadAlterarModal" tabindex="-1" aria-labelledby="cadAlterarModalLabel" aria-hidden="true">
+    
          
         <div class="modal-dialog">
             <div class="modal-content">
@@ -278,9 +293,7 @@
 
                         <div class="mb-3">
                             <label for="cademail" class="col-form-label">CNPJ:</label>
-                            <input type="text" name="cnpj" class="form-control" id="cnpj" placeholder="Digite seu CNPJ" value="<?php 
-                            echo $cnpj;
-                                 ?>">
+                            <input type="text" name="cnpj" class="form-control" id="cnpj" placeholder="Digite seu CNPJ" value="">
                         </div>
 
                         <div class="mb-3">
