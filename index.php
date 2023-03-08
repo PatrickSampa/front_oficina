@@ -20,18 +20,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 <?php
+
+
+
 if(isset($_POST['Editar'])) {
         echo "<script>
         $(document).ready(function(){
             $('#cadAlterarModal').modal('show');
         });
     </script>";
-
+    }
+elseif (isset($_POST['Alterar'])){
+        include('crud/update.php');
+        }
     
-    }
-    if (isset($_POST['Alterar'])){
-        include_once('crud/update.php');
-    }
+    
+    
 ?>
 </head>
 
@@ -55,18 +59,7 @@ if(isset($_POST['Editar'])) {
         </div>
     </div>
     <?php
-        
-        $nome = '';
-        $cnpj = '';
-        $inscricao = '';
-        $razao = '';
-        $cep = '';
-        $estado = '';
-        $municipio = '';
-        $bairro = '';
-        $logradouro = '';
-        $numero = 0;
-        
+    
         if(isset($_POST['acessar'])){
             include_once('config.php');
             if($_POST['cnpjres']== null){
@@ -104,12 +97,12 @@ if(isset($_POST['Editar'])) {
                             echo "<th>".$row3->Municipio."</th>";
                             echo "<th>
                             <form method='post' action='index.php'>
+                            <input type='submit' class='btn btn-outline-success bt-sm' id='Editar' value='Editar' name='Editar'>
+                            <input type='hidden' name='idEmpresa5' value= {$row->idEmpresa} id='idEmpresa5'/>
+                            <form method='post' action='index.php'>
                             <input type='submit' class='btn btn-outline-danger bt-sm' id='deletar' value='Excluir' name='deletar'>
                             <input type='hidden' name='idEmpresa' value= {$row->idEmpresa} id='idEmpresa'/>
                             </form>
-                            <form method='post' action='index.php'>
-                            <input type='submit' class='btn btn-outline-success bt-sm' id='Editar' value='Editar' name='Editar'>
-                            <input type='hidden' name='idEmpresa' value= {$row->idEmpresa} id='idEmpresa'/>
                             </form></th>";
                             echo "</tr>";
                             
@@ -168,15 +161,7 @@ if(isset($_POST['Editar'])) {
                             <input type='hidden' name='idEmpresa' value= {$row->idEmpresa} id='idEmpresa'/>
                             </form></th>";
                             echo "</tr>";
-                            $nome = $row->nome;
-                            $cnpj = $row->cnpj;
-                            $inscricao = $row->inscricao;
-                            $razao = $row->razao;
-                            $cep = $row2->CEP;
-                            $municipio = $row3->Municipio;
-                            $bairro = $row2->bairro;
-                            $logradouro = $row2->Logradouro;
-                            $numero = $row2->numero;
+                            
                         }    
                         echo "</table>";    
                     }
@@ -283,9 +268,9 @@ if(isset($_POST['Editar'])) {
 <div class="modal fade" id="cadAlterarModal" tabindex="-1" aria-labelledby="cadAlterarModalLabel" aria-hidden="true">
         <?php
         include_once('config.php');
-            $resultado = $conn->query("SELECT * FROM oficina WHERE idEmpresa = {$_POST['idEmpresa']}");
+            $resultado = $conn->query("SELECT * FROM oficina WHERE idEmpresa = {$_POST['idEmpresa5']}");
             $linha = $resultado->fetch_object();
-            $resultado2 = $conn->query("SELECT * FROM Endereco WHERE Oficina_idEmpresa = {$_POST['idEmpresa']}");
+            $resultado2 = $conn->query("SELECT * FROM Endereco WHERE Oficina_idEmpresa = {$_POST['idEmpresa5']}");
             $linha2 = $resultado2->fetch_object();
             $resultado3 = $conn->query("SELECT * FROM Municipio WHERE idMunicipio = {$linha2->Municipio_idMunicipio}");
             $linha3 = $resultado3->fetch_object();

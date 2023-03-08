@@ -1,32 +1,29 @@
 <?php
 
 include_once('config.php');
-try {
+include_once('classes/Oficina.php');
+include_once('classes/Endereco.php');
 
+try {
+    
     if ($_POST['altercadnome'] == null || $_POST['altercnpj']  == null ||  $_POST['alterinscricao'] == null||  $_POST['altercep'] == null ||  $_POST['alterrazao'] == null||
     $_POST['alterbairro']== null||$_POST['alterlogradouro']==null || $_POST['alterestado']==null || $_POST['altermunicipio']==null || $_POST['alternumero']==null) {
         throw new Exception("Não deixe campos em branco!", 1);
         
-    } else {
-
-    include_once('classes/Oficina.php');
-    include_once('classes/Endereco.php');
-    
+    } else {    
+    $result = $conn->query("SELECT * FROM oficina WHERE cnpj = {$_POST['altercnpj']};");
+    $q_oficina = $result->fetch_object();
     $oficina = new Oficina( $_POST['altercadnome'], $_POST['altercnpj'], $_POST['alterinscricao'], $_POST['alterrazao']);
     $result = $conn->query("UPDATE oficina SET nome='{$oficina->get_nome()}',cnpj='{$oficina->get_cnpj()}',
-    inscricao={$oficina->get_inscricao()}, razao='{$oficina->get_razao()}'");
-    
-    $res = mysqli_query($conn, 'select max(idEmpresa) from oficina;');
-    $max = mysqli_fetch_all($res, MYSQLI_ASSOC);
-    $max = $max[0]['max(idEmpresa)'];
+    inscricao={$oficina->get_inscricao()}, razao='{$oficina->get_razao()}' WHERE cnpj = {$q_oficina->cnpj};");
     
     $res2 = mysqli_query($conn, "select idMunicipio from municipio where Municipio like '{$_POST['altermunicipio']}';");
     $idmun = mysqli_fetch_all($res2, MYSQLI_ASSOC);
     $idmun = $idmun[0]['idMunicipio'];
     
-    $endereco = new Endereco( $_POST['altercep'], $_POST['alternumero'],$_POST['alterbairro'],$_POST['alterlogradouro'], $max, $idmun);
+    $endereco = new Endereco( $_POST['altercep'], $_POST['alternumero'],$_POST['alterbairro'],$_POST['alterlogradouro'], $q_oficina->idEmpresa, $idmun);
     $result = $conn->query("UPDATE Endereco SET CEP='{$endereco->get_cep()}',numero='{$endereco->get_numero()}',bairro='{$endereco->get_bairro()}', 
-    Logradouro='{$endereco->get_logradouro()}';");
+    Logradouro='{$endereco->get_logradouro()}' WHERE Oficina_idEmpresa = {$q_oficina->idEmpresa};");
     }
     echo "<div class='alert alert-success' role='alert' style='text-align: center;'>
     Oficina Atualizada com sucesso
