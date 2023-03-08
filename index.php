@@ -43,12 +43,6 @@ elseif (isset($_POST['Alterar'])){
 
 <body>
     <div class="container text-center">
-        <!-- Substituir o botão pelos dados do usuário 
-        <div id="dados-usuario">
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
-                Acessar
-            </button>
-        </div>-->
             <div id='dados-usuario'>
                 <button type='button' class='btn btn-outline-dark' data-bs-toggle='modal' data-bs-target='#cadUsuarioModal'>Cadastrar</button>
                 <button type='button' class='btn btn-outline-primary m-3' data-bs-toggle='modal' data-bs-target='#loginModal'>Acessar</button>
@@ -65,7 +59,6 @@ elseif (isset($_POST['Alterar'])){
             if($_POST['cnpjres']== null){
                 $result2 = $conn->query("SELECT * FROM oficina");
                 try{
-                    //$res = $conn->query("delete from endereco where Oficina_idEmpresa = {$result[0]['idEmpresa']};");
                     $qtd = $result2->num_rows;
                     if($qtd>0){
                         echo "<table class='table table-striped table-bordered'>";
@@ -81,6 +74,7 @@ elseif (isset($_POST['Alterar'])){
                         echo "<th>Município</th>";
                         echo "<td>Editar</td>";
                         echo "</tr>";
+
                         while($row = $result2->fetch_object()){
                             $result = $conn->query("SELECT * FROM endereco WHERE Oficina_idEmpresa = $row->idEmpresa");
                             $row2 = $result->fetch_object();
@@ -154,11 +148,14 @@ elseif (isset($_POST['Alterar'])){
                             echo "<th>".$row2->numero."</th>";
                             echo "<th>".$row2->bairro."</th>";
                             echo "<th>".$row3->Municipio."</th>";
-                            echo "<th><button type='button' class='btn btn-outline-success' data-bs-toggle='modal' data-bs-target='#cadAlterarModal'>Editar</button>";
-                            echo "\n";
-                            echo "<form method='post' action='index.php'>
+                            echo "<th>
+                            <form method='post' action='index.php'>
+                            <input type='submit' class='btn btn-outline-success bt-sm' id='Editar' value='Editar' name='Editar'>
+                            <input type='hidden' name='idEmpresa5' value= {$row->idEmpresa} id='idEmpresa5'/>
+                            <form method='post' action='index.php'>
                             <input type='submit' class='btn btn-outline-danger bt-sm' id='deletar' value='Excluir' name='deletar'>
                             <input type='hidden' name='idEmpresa' value= {$row->idEmpresa} id='idEmpresa'/>
+                            </form>
                             </form></th>";
                             echo "</tr>";
                             
