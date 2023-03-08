@@ -328,7 +328,7 @@ if(isset($_POST['Editar'])) {
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Estado:</label>
-                            <input type="text" name="alterestado" class="form-control" id="alterestado"  placeholder="Informe seu Estado" value="<?php $linha4->Estado?>">
+                            <input type="text" name="alterestado" class="form-control" id="alterestado"  placeholder="Informe seu Estado" value="<?php echo $linha4->Estado?>">
                         </div>
                         <div class="mb-3">
                             <label for="cadsenha" class="col-form-label">Município:</label>
