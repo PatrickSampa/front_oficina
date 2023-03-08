@@ -161,7 +161,10 @@ if(isset($_POST['Editar'])) {
                             echo "<th>".$row2->numero."</th>";
                             echo "<th>".$row2->bairro."</th>";
                             echo "<th>".$row3->Municipio."</th>";
-                            echo "<th><button type='button' class='btn btn-outline-success' data-bs-toggle='modal' data-bs-target='#cadAlterarModal'>Editar</button>";
+                            echo "<th><form method='post' action='index.php'>
+                            <input type='submit' class='btn btn-outline-danger bt-sm' id='deletar' value='Excluir' name='deletar'>
+                            <input type='hidden' name='idEmpresa' value= {$row->idEmpresa} id='idEmpresa'/>
+                            </form>";
                             echo "\n";
                             echo "<button type='button' class='btn btn-outline-danger' data-bs-toggle='modal' data-bs-target='#cadDeletarModal'>Excluir</button></th>";
                             echo "</tr>";
